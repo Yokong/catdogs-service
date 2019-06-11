@@ -2,6 +2,7 @@ package main
 
 import (
 	pb "catdogs-proto"
+	"catdogs-service/models"
 	"context"
 	"fmt"
 	"log"
@@ -26,6 +27,10 @@ func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRs
 	}, nil
 }
 
+func init() {
+	models.InitModel()
+}
+
 func main() {
 	initServer()
 }
@@ -37,5 +42,8 @@ func initServer() {
 	}
 	s := grpc.NewServer()
 	pb.RegisterUserServer(s, &User{})
-	s.Serve(lis)
+	err = s.Serve(lis)
+	if err != nil {
+		log.Fatal("failed to Serve: ", err)
+	}
 }
