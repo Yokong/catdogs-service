@@ -4,7 +4,6 @@ import (
 	pb "catdogs-proto"
 	"catdogs-service/models"
 	"context"
-	"fmt"
 	"log"
 	"net"
 
@@ -18,13 +17,7 @@ const (
 type User struct{}
 
 func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-	fmt.Println(in.Email)
-	fmt.Println(in.Password)
-	return &pb.RegisterRsp{
-		Code: 0,
-		Msg:  "success",
-		Data: []byte(""),
-	}, nil
+	return RegisterHandler(ctx, in)
 }
 
 func init() {
