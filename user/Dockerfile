@@ -1,7 +1,7 @@
 FROM scratch
 
-COPY ./user ./user
+COPY ./catdogs-user ./catdogs-user
 
 EXPOSE 50001
 
-CMD ["./user"]
+CMD ["./catdogs-user"]

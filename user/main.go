@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	port = ":50001"
+	addr = ":50001"
 )
 
 type User struct{}
@@ -29,7 +29,7 @@ func main() {
 }
 
 func initServer() {
-	lis, err := net.Listen("tcp", port)
+	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatal("failed to listen: ", err)
 	}

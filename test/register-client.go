@@ -9,8 +9,10 @@ import (
 	"google.golang.org/grpc"
 )
 
+var addr = "118.24.146.34:50001"
+
 func main() {
-	conn, err := grpc.Dial("localhost:50001", grpc.WithInsecure())
+	conn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 	}
