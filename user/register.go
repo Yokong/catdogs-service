@@ -4,6 +4,7 @@ import (
 	pb "catdogs-proto"
 	configs "catdogs-service/configs/common"
 	"catdogs-service/libs"
+	"catdogs-service/logging"
 	"catdogs-service/models"
 	"context"
 	"crypto/md5"
@@ -12,6 +13,7 @@ import (
 )
 
 func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
+	logging.Info(in.Email, " commit register")
 	has, err := verifyUser(in)
 	if err != nil {
 		return &pb.RegisterRsp{
@@ -32,6 +34,7 @@ func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, 
 	go saveUser(in, tokenCh)
 	token := <-tokenCh
 
+	logging.Info(in.Email, " done register")
 	return &pb.RegisterRsp{
 		Code:  0,
 		Msg:   "success",
@@ -51,7 +54,7 @@ func saveUser(in *pb.RegisterReq, tokenCh chan string) {
 	}
 	err = u.Set()
 	if err != nil {
-		fmt.Println(err)
+		logging.Error("User Set: ", err)
 		session.Rollback()
 		return
 	}
@@ -61,20 +64,20 @@ func saveUser(in *pb.RegisterReq, tokenCh chan string) {
 	newu := models.User{Openid: openid}
 	_, err = session.Id(u.Id).Update(newu)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error("Update New User: ", err)
 		session.Rollback()
 		return
 	}
 	err = session.Commit()
 	if err != nil {
-		fmt.Println(err)
+		logging.Error("Session Commit: ", err)
 		return
 	}
 
 	// 生成token
 	token, err := libs.GenerateToken(openid)
 	if err != nil {
-		fmt.Println(err)
+		logging.Error("Generate Token: ", err)
 	}
 	tokenCh <- token
 }
@@ -86,7 +89,7 @@ func verifyUser(in *pb.RegisterReq) (bool, error) {
 	}
 	has, err := u.Get()
 	if err != nil {
-		fmt.Println(err)
+		logging.Error("VerifyUser Get: ", err)
 		return false, err
 	}
 	return has, nil

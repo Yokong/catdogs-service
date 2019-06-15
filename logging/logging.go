@@ -23,7 +23,10 @@ var (
 func init() {
 	logFile, err := os.OpenFile(configs.C.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Println(err)
+		if os.IsNotExist(err) {
+			logFile, err = os.Create(configs.C.LogFile)
+			fmt.Println(err)
+		}
 	}
 	logger = log.New(logFile, "", log.LstdFlags)
 }

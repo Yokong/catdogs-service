@@ -13,10 +13,11 @@ var addr = "118.24.146.34:50001"
 
 func main() {
 	// ferver := make(chan bool)
-	for i := 0; i < 300; i++ {
-		connect()
-	}
+	// for i := 0; i < 300; i++ {
+	// 	connect()
+	// }
 	// <-ferver
+	connect()
 }
 
 func connect() {
