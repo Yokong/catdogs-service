@@ -12,7 +12,14 @@ import (
 )
 
 func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-	has := verifyUser(in)
+	has, err := verifyUser(in)
+	if err != nil {
+		return &pb.RegisterRsp{
+			Code:  -999,
+			Msg:   "服务器出了点问题",
+			Token: "",
+		}, nil
+	}
 	if has {
 		return &pb.RegisterRsp{
 			Code:  -1000,
@@ -73,14 +80,14 @@ func saveUser(in *pb.RegisterReq, tokenCh chan string) {
 }
 
 // 验证用户是否存在
-func verifyUser(in *pb.RegisterReq) bool {
+func verifyUser(in *pb.RegisterReq) (bool, error) {
 	u := models.User{
 		Email: in.Email,
 	}
 	has, err := u.Get()
 	if err != nil {
 		fmt.Println(err)
-		return false
+		return false, err
 	}
-	return has
+	return has, nil
 }
