@@ -15,27 +15,31 @@ func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, 
 	has := verifyUser(in)
 	if has {
 		return &pb.RegisterRsp{
-			Code: -1000,
-			Msg: "用户已存在",
-			Data: []byte(""),
+			Code:  -1000,
+			Msg:   "用户已存在",
+			Token: "",
 		}, nil
 	}
-	go saveUser(in)
+
+	tokenCh := make(chan string)
+	go saveUser(in, tokenCh)
+	token := <-tokenCh
+
 	return &pb.RegisterRsp{
-		Code: 0,
-		Msg: "success",
-		Data: []byte(""),
+		Code:  0,
+		Msg:   "success",
+		Token: token,
 	}, nil
 }
 
-func saveUser(in *pb.RegisterReq) {
+func saveUser(in *pb.RegisterReq, tokenCh chan string) {
 	pwData := md5.Sum([]byte(in.Password + configs.C.PwSalt))
 	pwHex := fmt.Sprintf("%x", pwData)
 	session := models.Db.NewSession()
 	defer session.Close()
 	err := session.Begin()
 	u := models.User{
-		Email: in.Email,
+		Email:    in.Email,
 		Password: pwHex,
 	}
 	err = u.Set()
@@ -59,6 +63,13 @@ func saveUser(in *pb.RegisterReq) {
 		fmt.Println(err)
 		return
 	}
+
+	// 生成token
+	token, err := libs.GenerateToken(openid)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tokenCh <- token
 }
 
 // 验证用户是否存在

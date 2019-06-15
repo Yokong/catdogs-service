@@ -21,7 +21,7 @@ func main() {
 	c := pb.NewUserClient(conn)
 
 	r, err := c.Register(context.Background(), &pb.RegisterReq{
-		Email:    "18836617@qq.com",
+		Email:    "153367234@qq.com",
 		Password: "123123123",
 	})
 	if err != nil {
@@ -29,5 +29,5 @@ func main() {
 	}
 	fmt.Println(r.Code)
 	fmt.Println(r.Msg)
-	fmt.Println(r.Data)
+	fmt.Println(r.Token)
 }
