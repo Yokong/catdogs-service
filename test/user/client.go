@@ -12,15 +12,34 @@ import (
 var addr = "118.24.146.34:50001"
 
 func main() {
-	// ferver := make(chan bool)
-	// for i := 0; i < 300; i++ {
-	// 	connect()
-	// }
-	// <-ferver
-	connect()
+	ferver := make(chan bool)
+	for i := 0; i < 1000; i++ {
+		login()
+	}
+	<-ferver
+	// register()
 }
 
-func connect() {
+func login() {
+	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+
+	c := pb.NewUserClient(conn)
+
+	r, err := c.Login(context.Background(), &pb.LoginReq{
+		Email:    "18836617@qq.com",
+		Password: "513520",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(r.Code, r.Msg)
+}
+
+func register() {
 	conn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)

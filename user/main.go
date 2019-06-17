@@ -21,11 +21,7 @@ func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRs
 }
 
 func (u *User) Login(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
-	return &pb.LoginRsp{
-		Code:  0,
-		Msg:   "",
-		Token: "",
-	}, nil
+	return LoginHandler(ctx, in)
 }
 
 func init() {
