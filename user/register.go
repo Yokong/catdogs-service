@@ -13,7 +13,7 @@ import (
 )
 
 func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-	logging.Info(in.Email, " commit register")
+	logging.Info(in.Email, " entering register")
 	has, err := verifyUser(in)
 	if err != nil {
 		return &pb.RegisterRsp{
@@ -34,7 +34,7 @@ func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, 
 	go saveUser(in, tokenCh)
 	token := <-tokenCh
 
-	logging.Info(in.Email, " done register")
+	logging.Info(in.Email, " all done register")
 	return &pb.RegisterRsp{
 		Code:  0,
 		Msg:   "success",
