@@ -12,12 +12,13 @@ import (
 var addr = "118.24.146.34:50001"
 
 func main() {
-	ferver := make(chan bool)
-	for i := 0; i < 1000; i++ {
-		login()
-	}
-	<-ferver
+	// ferver := make(chan bool)
+	// for i := 0; i < 1000; i++ {
+	// 	login()
+	// }
+	// <-ferver
 	// register()
+	login()
 }
 
 func login() {

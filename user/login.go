@@ -12,6 +12,7 @@ import (
 )
 
 func LoginHandler(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
+	logging.Info(in.Email, " entering login")
 	u := models.User{
 		Email: in.Email,
 	}
@@ -49,6 +50,7 @@ func LoginHandler(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
 			Token: "",
 		}, nil
 	}
+	logging.Info(in.Email, " all done login")
 	return &pb.LoginRsp{
 		Code:  0,
 		Msg:   "success",
