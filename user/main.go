@@ -4,24 +4,23 @@ import (
 	pb "catdogs-proto"
 	"catdogs-service/models"
 	"context"
-	"log"
-	"net"
-
-	"google.golang.org/grpc"
-)
-
-const (
-	addr = ":50001"
+	"fmt"
+	"github.com/micro/go-micro"
 )
 
 type User struct{}
 
-func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-	return RegisterHandler(ctx, in)
-}
-
-func (u *User) Login(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
-	return LoginHandler(ctx, in)
+//func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
+//	return RegisterHandler(ctx, in)
+//}
+//
+//func (u *User) Login(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
+//	return LoginHandler(ctx, in)
+//}
+func (u *User) Register(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
+	rsp.Code = 0
+	rsp.Msg = "Success"
+	return nil
 }
 
 func init() {
@@ -33,14 +32,14 @@ func main() {
 }
 
 func initServer() {
-	lis, err := net.Listen("tcp", addr)
+	service := micro.NewService(micro.Name("user"))
+	service.Init()
+
+	err := pb.RegisterUserHandler(service.Server(), new(User))
 	if err != nil {
-		log.Fatal("failed to listen: ", err)
+		fmt.Println(err)
 	}
-	s := grpc.NewServer()
-	pb.RegisterUserServer(s, &User{})
-	err = s.Serve(lis)
-	if err != nil {
-		log.Fatal("failed to Serve: ", err)
+	if err := service.Run(); err != nil {
+		fmt.Println(err)
 	}
 }
