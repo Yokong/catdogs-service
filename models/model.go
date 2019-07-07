@@ -24,4 +24,5 @@ func InitModel() {
 func initTables() {
 	Db.Sync2(new(User))
 	Db.Sync2(new(VerifyCode))
+	Db.Sync2(new(Post))
 }

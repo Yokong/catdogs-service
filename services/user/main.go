@@ -10,13 +10,6 @@ import (
 
 type User struct{}
 
-//func (u *User) Register(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-//	return RegisterHandler(ctx, in)
-//}
-//
-//func (u *User) Login(ctx context.Context, in *pb.LoginReq) (*pb.LoginRsp, error) {
-//	return LoginHandler(ctx, in)
-//}
 func (u *User) Register(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
 	rsp.Code = 0
 	rsp.Msg = "Success"
