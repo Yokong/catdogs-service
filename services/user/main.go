@@ -5,15 +5,14 @@ import (
 	"catdogs-service/models"
 	"context"
 	"fmt"
+
 	"github.com/micro/go-micro"
 )
 
 type User struct{}
 
 func (u *User) Register(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
-	rsp.Code = 0
-	rsp.Msg = "Success"
-	return nil
+	return RegisterHandler(ctx, req, rsp)
 }
 
 func init() {

@@ -12,34 +12,31 @@ import (
 	"strconv"
 )
 
-func RegisterHandler(ctx context.Context, in *pb.RegisterReq) (*pb.RegisterRsp, error) {
-	logging.Info(in.Email, " entering register")
-	has, err := verifyUser(in)
+func RegisterHandler(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
+	logging.Info(req.Email, " entering register")
+	has, err := verifyUser(req)
 	if err != nil {
-		return &pb.RegisterRsp{
-			Code:  -999,
-			Msg:   "服务器出了点问题",
-			Token: "",
-		}, nil
+		rsp.Code = -999
+		rsp.Msg = "服务器出了点问题"
+		rsp.Token = ""
+		return nil
 	}
 	if has {
-		return &pb.RegisterRsp{
-			Code:  -1000,
-			Msg:   "用户已存在",
-			Token: "",
-		}, nil
+		rsp.Code = -1000
+		rsp.Msg = "用户已存在"
+		rsp.Token = ""
+		return nil
 	}
 
 	tokenCh := make(chan string)
-	go saveUser(in, tokenCh)
+	go saveUser(req, tokenCh)
 	token := <-tokenCh
 
-	logging.Info(in.Email, " all done register")
-	return &pb.RegisterRsp{
-		Code:  0,
-		Msg:   "success",
-		Token: token,
-	}, nil
+	logging.Info(req.Email, " all done register")
+	rsp.Code = 0
+	rsp.Msg = "success"
+	rsp.Token = token
+	return nil
 }
 
 func saveUser(in *pb.RegisterReq, tokenCh chan string) {
