@@ -2,21 +2,13 @@ package main
 
 import (
 	pb "catdogs-proto"
-	"catdogs-service/logging"
-	"catdogs-service/models"
 	"context"
-	"time"
+	"fmt"
 )
 
-func PosterHandler(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRsq) error {
-	post := models.Post{
-		Title:     req.Title,
-		Content:   req.Content,
-		Author:    req.Author,
-		Timestamp: time.Now().Unix(),
-	}
-	err := post.Set()
-	if err != nil {
-		logging.Error("SET POST: ", err)
-	}
+func PosterHandler(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRsp) error {
+	rsp.Code = 0
+	rsp.Msg = "success"
+	fmt.Println(req.Content)
+	return nil
 }
