@@ -11,9 +11,7 @@ import (
 type Post struct{}
 
 func (p *Post) Poster(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRsp) error {
-	rsp.Code = 0
-	rsp.Msg = "Success"
-	return nil
+	return PosterHandler(ctx, req, rsp)
 }
 
 func main() {
