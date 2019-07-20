@@ -6,7 +6,7 @@ type Post struct {
 	Id         int    `xorm:"pk autoincr"`
 	Title      string `xorm:"varchar(120)"`
 	Author     string `xorm:"varchar(24)"`
-	Content    struct{}
+	Content    []byte
 	Source     string `xorm:"varchar(10)"`
 	Timestamp  int
 	CreateTime time.Time `xorm:"created"`
