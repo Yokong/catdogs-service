@@ -1,0 +1,3 @@
+[submodule "catdogs-proto"]
+	path = catdogs-proto
+	url = git@github.com:Yokong/catdogs-proto.git
