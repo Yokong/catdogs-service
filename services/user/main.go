@@ -1,8 +1,8 @@
 package main
 
 import (
-	pb "catdogs-proto"
 	"catdogs-service/models"
+	pb "catdogs-service/pb"
 	"context"
 	"fmt"
 
@@ -13,6 +13,10 @@ type User struct{}
 
 func (u *User) Register(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
 	return RegisterHandler(ctx, req, rsp)
+}
+
+func (u *User) Login(ctx context.Context, req *pb.LoginReq, rsp *pb.LoginRsp) error {
+	return nil
 }
 
 func init() {

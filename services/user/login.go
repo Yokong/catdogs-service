@@ -1,11 +1,11 @@
 package main
 
 import (
-	pb "catdogs-proto"
 	configs "catdogs-service/configs/common"
 	"catdogs-service/libs"
 	"catdogs-service/logging"
 	"catdogs-service/models"
+	pb "catdogs-service/pb"
 	"context"
 	"crypto/md5"
 	"fmt"
