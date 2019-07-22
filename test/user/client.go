@@ -1,9 +1,10 @@
 package main
 
 import (
-	pb "catdogs-proto"
+	pb "catdogs-service/pb"
 	"context"
 	"fmt"
+
 	"github.com/micro/go-micro"
 )
 
@@ -43,7 +44,7 @@ func register() {
 	service.Init()
 	user := pb.NewUserService("user", service.Client())
 	rsp, err := user.Register(context.TODO(), &pb.RegisterReq{
-		Email: "188",
+		Email:    "188",
 		Password: "12312312",
 	})
 	if err != nil {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "catdogs-proto"
+	pb "catdogs-service/pb"
 	"context"
 	"fmt"
 

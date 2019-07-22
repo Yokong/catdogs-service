@@ -1,6 +1,7 @@
 package main
 
 import (
+	"catdogs-service/models"
 	pb "catdogs-service/pb"
 	"context"
 	"fmt"
@@ -12,6 +13,10 @@ type Post struct{}
 
 func (p *Post) Poster(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRsp) error {
 	return PosterHandler(ctx, req, rsp)
+}
+
+func init() {
+	models.InitModel()
 }
 
 func main() {
