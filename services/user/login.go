@@ -11,8 +11,8 @@ import (
 	"fmt"
 )
 
-func LoginHandler(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterRsp) error {
-	logging.Info(req.Email, " enterreqg logreq")
+func LoginHandler(ctx context.Context, req *pb.LoginReq, rsp *pb.LoginRsp) error {
+	logging.Info(req.Email, " entering logreq")
 	u := models.User{
 		Email: req.Email,
 	}

@@ -16,7 +16,7 @@ func (u *User) Register(ctx context.Context, req *pb.RegisterReq, rsp *pb.Regist
 }
 
 func (u *User) Login(ctx context.Context, req *pb.LoginReq, rsp *pb.LoginRsp) error {
-	return nil
+	return LoginHandler(ctx, req, rsp)
 }
 
 func init() {
