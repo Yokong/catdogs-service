@@ -15,6 +15,10 @@ func (p *Post) Poster(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRs
 	return PosterHandler(ctx, req, rsp)
 }
 
+func (p *Post) GetPostById(ctx context.Context, req *pb.GetPostByIdReq, rsp *pb.GetPostByIdRsp) error {
+	return nil
+}
+
 func init() {
 	models.InitModel()
 }
