@@ -1,6 +1,6 @@
 package libs
 
-var codes map[int]string = map[int]string{
+var Codes map[int]string = map[int]string{
 	0:     "success",
 	-999:  "服务器出了点问题, 请再试一次",
 	-1000: "用户已存在",
@@ -9,4 +9,5 @@ var codes map[int]string = map[int]string{
 	-1004: "无效的cookie",
 	-1005: "无效的token",
 	-1006: "token已过期",
+	-1007: "帖子不存在",
 }

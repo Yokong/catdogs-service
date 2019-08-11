@@ -16,7 +16,7 @@ func (p *Post) Poster(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRs
 }
 
 func (p *Post) GetPostById(ctx context.Context, req *pb.GetPostByIdReq, rsp *pb.GetPostByIdRsp) error {
-	return nil
+	return GetPostByIdHandler(ctx, req, rsp)
 }
 
 func init() {
