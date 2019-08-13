@@ -26,7 +26,7 @@ func InitModel() {
 	initTables()
 
 	// 初始化mongodb
-	Mdb, err = mgo.Dial("")
+	Mdb, err = mgo.Dial(configs.C.MongoDbAddr)
 	if err != nil {
 		panic(err)
 	}

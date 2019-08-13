@@ -10,6 +10,7 @@ import (
 type Common struct {
 	EnvModel     string `yaml:"envModel"`
 	DbAddr       string `yaml:"dbAddr"`
+	MongoDbAddr  string `yaml:"mongoDbAddr"`
 	SqlLogFile   string `yaml:"sqlLogFile"`
 	LogFile      string `yaml:"logFile"`
 	IdleConns    int    `yaml:"idleConns"`
@@ -34,4 +35,3 @@ func init() {
 		fmt.Println(err)
 	}
 }
-

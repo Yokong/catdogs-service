@@ -19,6 +19,10 @@ func (u *User) Login(ctx context.Context, req *pb.LoginReq, rsp *pb.LoginRsp) er
 	return LoginHandler(ctx, req, rsp)
 }
 
+func (u *User) SetProfile(ctx context.Context, req *pb.SetProfileReq, rsp *pb.SetProfileRsp) error {
+	return SetProfileHandler(ctx, req, rsp)
+}
+
 func init() {
 	models.InitModel()
 }
