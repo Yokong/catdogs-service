@@ -19,36 +19,31 @@ func LoginHandler(ctx context.Context, req *pb.LoginReq, rsp *pb.LoginRsp) error
 	has, err := u.Get()
 	if err != nil {
 		logging.Error("Logreq Get User: ", err)
-		rsp.Code = -999
-		rsp.Msg = "服务器出现问题"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -999})
 		rsp.Token = ""
 		return nil
 	}
 	if !has {
-		rsp.Code = -1002
-		rsp.Msg = "用户不存在"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -1002})
 		rsp.Token = ""
 		return nil
 	}
 	pwd := md5.Sum([]byte(req.Password + configs.C.PwSalt))
 	pwdHex := fmt.Sprintf("%x", pwd)
 	if pwdHex != u.Password {
-		rsp.Code = -1003
-		rsp.Msg = "密码错误"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -1003})
 		rsp.Token = ""
 		return nil
 	}
 	token, err := libs.GenerateToken(u.Openid)
 	if err != nil {
 		logging.Error("Generate Token In Logreq: ", err)
-		rsp.Code = -999
-		rsp.Msg = "服务器出现问题"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -999})
 		rsp.Token = ""
 		return nil
 	}
 	logging.Info(req.Email, " all done logreq")
-	rsp.Code = 0
-	rsp.Msg = "success"
+	rsp.Rsp = libs.GenRsp(&libs.R{Code: 0})
 	rsp.Token = token
 	return nil
 }

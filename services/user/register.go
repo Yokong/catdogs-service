@@ -16,14 +16,12 @@ func RegisterHandler(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterR
 	logging.Info(req.Email, " entering register")
 	has, err := verifyUser(req)
 	if err != nil {
-		rsp.Code = -999
-		rsp.Msg = "服务器出了点问题"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -999})
 		rsp.Token = ""
 		return nil
 	}
 	if has {
-		rsp.Code = -1000
-		rsp.Msg = "用户已存在"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -1000})
 		rsp.Token = ""
 		return nil
 	}
@@ -33,8 +31,7 @@ func RegisterHandler(ctx context.Context, req *pb.RegisterReq, rsp *pb.RegisterR
 	token := <-tokenCh
 
 	logging.Info(req.Email, " all done register")
-	rsp.Code = 0
-	rsp.Msg = "success"
+	rsp.Rsp = libs.GenRsp(&libs.R{Code: 0})
 	rsp.Token = token
 	return nil
 }

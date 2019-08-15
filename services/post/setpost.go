@@ -5,6 +5,7 @@ import (
 	"catdogs-service/models"
 	pb "catdogs-service/pb"
 	"context"
+	"libs"
 	"time"
 )
 
@@ -18,12 +19,10 @@ func PosterHandler(ctx context.Context, req *pb.SetPostReq, rsp *pb.SetPostRsp) 
 	err := post.Set()
 	if err != nil {
 		logging.Error("Set Post: ", err)
-		rsp.Code = -999
-		rsp.Msg = "服务器出现问题"
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -999})
 		return err
 	}
 
-	rsp.Code = 0
-	rsp.Msg = "success"
+	rsp.Rsp = libs.GenRsp(&libs.R{Code: 0})
 	return nil
 }

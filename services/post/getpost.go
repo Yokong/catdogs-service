@@ -15,17 +15,14 @@ func GetPostByIdHandler(ctx context.Context, req *pb.GetPostByIdReq, rsp *pb.Get
 	has, err := post.Get()
 	if err != nil {
 		logging.Error("GetPostById Err: ", err)
-		rsp.Code = -999
-		rsp.Msg = libs.Codes[-999]
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -999})
 		return err
 	}
 	if !has {
-		rsp.Code = -1007
-		rsp.Msg = libs.Codes[-1007]
+		rsp.Rsp = libs.GenRsp(&libs.R{Code: -1007})
 		return nil
 	}
-	rsp.Code = 0
-	rsp.Msg = "Success"
+	rsp.Rsp = libs.GenRsp(&libs.R{Code: 0})
 	rsp.Author = post.Author
 	rsp.Content = string(post.Content)
 	rsp.Source = post.Source

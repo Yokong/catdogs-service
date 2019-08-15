@@ -4,6 +4,7 @@ import (
 	"catdogs-service/models"
 	pb "catdogs-service/pb"
 	"context"
+	"libs"
 )
 
 func SetProfileHandler(ctx context.Context, req *pb.SetProfileReq, rsp *pb.SetProfileRsp) error {
@@ -20,7 +21,6 @@ func SetProfileHandler(ctx context.Context, req *pb.SetProfileReq, rsp *pb.SetPr
 	}
 	p.Set()
 
-	rsp.Code = 0
-	rsp.Msg = "Success"
+	rsp.Rsp = libs.GenRsp(&libs.R{Code: 0})
 	return nil
 }
