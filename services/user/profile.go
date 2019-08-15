@@ -1,10 +1,10 @@
 package main
 
 import (
+	"catdogs-service/libs"
 	"catdogs-service/models"
 	pb "catdogs-service/pb"
 	"context"
-	"libs"
 )
 
 func SetProfileHandler(ctx context.Context, req *pb.SetProfileReq, rsp *pb.SetProfileRsp) error {

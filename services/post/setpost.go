@@ -1,11 +1,11 @@
 package main
 
 import (
+	"catdogs-service/libs"
 	"catdogs-service/logging"
 	"catdogs-service/models"
 	pb "catdogs-service/pb"
 	"context"
-	"libs"
 	"time"
 )
 
