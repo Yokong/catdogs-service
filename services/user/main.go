@@ -25,6 +25,7 @@ func (u *User) SetProfile(ctx context.Context, req *pb.SetProfileReq, rsp *pb.Se
 
 func init() {
 	models.InitModel()
+	models.InitMongoDb()
 }
 
 func main() {
